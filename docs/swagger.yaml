@@ -1,0 +1,1548 @@
+basePath: /api/v1
+definitions:
+  model.CollectionRequest:
+    properties:
+      filters:
+        type: string
+      name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.CollectionResponse:
+    properties:
+      filters:
+        type: string
+      name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.CollectionUpdateRequest:
+    properties:
+      filters:
+        type: string
+      name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.FieldRequest:
+    properties:
+      name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.FieldResponse:
+    properties:
+      name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.FieldUpdateRequest:
+    properties:
+      name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.MediaFieldRequest:
+    properties:
+      field_id:
+        type: integer
+      media_id:
+        type: integer
+      value:
+        type: string
+    type: object
+  model.MediaFieldResponse:
+    properties:
+      field_id:
+        type: integer
+      media_id:
+        type: integer
+      value:
+        type: string
+    type: object
+  model.MediaFieldUpdateRequest:
+    properties:
+      value:
+        type: string
+    type: object
+  model.MediaRequest:
+    properties:
+      completion_date:
+        type: string
+      description:
+        type: string
+      genre:
+        type: string
+      img_url:
+        type: string
+      media_type:
+        type: string
+      name:
+        type: string
+      notes:
+        type: string
+      rating:
+        type: integer
+      start_date:
+        type: string
+      status:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.MediaResponse:
+    properties:
+      completion_date:
+        type: string
+      description:
+        type: string
+      genre:
+        type: string
+      img_url:
+        type: string
+      media_id:
+        type: integer
+      media_type:
+        type: string
+      name:
+        type: string
+      notes:
+        type: string
+      rating:
+        type: integer
+      start_date:
+        type: string
+      status:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.MediaUpdateRequest:
+    properties:
+      completion_date:
+        type: string
+      description:
+        type: string
+      genre:
+        type: string
+      img_url:
+        type: string
+      media_type:
+        type: string
+      name:
+        type: string
+      notes:
+        type: string
+      rating:
+        type: integer
+      start_date:
+        type: string
+      status:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.TagRequest:
+    properties:
+      color:
+        type: string
+      name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.TagResponse:
+    properties:
+      color:
+        type: string
+      name:
+        type: string
+      tag_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  model.TagUpdateRequest:
+    properties:
+      color:
+        type: string
+      name:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  model.TokenRequest:
+    properties:
+      refresh_token:
+        type: string
+    type: object
+  model.TokenResponse:
+    properties:
+      access_token:
+        type: string
+      refresh_token:
+        type: string
+      token_type:
+        type: string
+    type: object
+  model.UserRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  model.UserResponse:
+    properties:
+      email:
+        type: string
+      user_id:
+        type: integer
+      username:
+        type: string
+    type: object
+  model.UserUpdateRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: This is the MediaDex API
+  title: MediaDex API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate a user and return JWT tokens
+      parameters:
+      - description: Login credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: User login
+      tags:
+      - Authentication
+  /auth/refresh:
+    post:
+      consumes:
+      - application/json
+      description: Generate a new JWT token from an existing valid refresh token
+      parameters:
+      - description: Refresh token
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.TokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "401":
+          description: Unauthorized
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Refresh token
+      tags:
+      - Authentication
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user and return JWT tokens
+      parameters:
+      - description: Register credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: Conflict
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: User register
+      tags:
+      - Authentication
+  /collections:
+    get:
+      description: Retrieve all collection
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.CollectionResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get all collection
+      tags:
+      - Collections
+    post:
+      consumes:
+      - application/json
+      description: Creates a new Collection entry in the database
+      parameters:
+      - description: Collection creation payload
+        in: body
+        name: collection
+        required: true
+        schema:
+          $ref: '#/definitions/model.CollectionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CollectionResponse'
+        "400":
+          description: Invalid Collection POST request payload !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to create Collection !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new Collection
+      tags:
+      - Collections
+  /collections/{id}:
+    delete:
+      description: Deletes a collection from the database by its ID
+      parameters:
+      - description: Collection ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Collection deleted successfully
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Collection not found !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to delete Collection !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete a collection
+      tags:
+      - Collections
+    get:
+      description: Retrieves a specific collection from the database by its ID
+      parameters:
+      - description: collection ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CollectionResponse'
+        "404":
+          description: Collection not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to find specific Collection !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get collection by ID
+      tags:
+      - Collections
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing collection
+      parameters:
+      - description: Collection ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated collection payload
+        in: body
+        name: collection
+        required: true
+        schema:
+          $ref: '#/definitions/model.CollectionUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.CollectionResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update a collection
+      tags:
+      - Collections
+  /fields:
+    get:
+      description: Retrieve all field
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.FieldResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get all field
+      tags:
+      - Field
+    post:
+      consumes:
+      - application/json
+      description: Creates a new Field entry in the database
+      parameters:
+      - description: Field creation payload
+        in: body
+        name: field
+        required: true
+        schema:
+          $ref: '#/definitions/model.FieldRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.FieldResponse'
+        "400":
+          description: Invalid Field POST request payload !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to create Field !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new Field
+      tags:
+      - Field
+  /fields/{id}:
+    delete:
+      description: Deletes a field from the database by its ID
+      parameters:
+      - description: Field ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Field deleted successfully
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Field not found !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to delete Field !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete a field
+      tags:
+      - Field
+    get:
+      description: Retrieves a specific field from the database by its ID
+      parameters:
+      - description: field ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.FieldResponse'
+        "404":
+          description: Field not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to find specific Field !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get field by ID
+      tags:
+      - Field
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing field
+      parameters:
+      - description: Field ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated field payload
+        in: body
+        name: field
+        required: true
+        schema:
+          $ref: '#/definitions/model.FieldUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.FieldResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update a field
+      tags:
+      - Field
+  /fields/{id}/media:
+    get:
+      description: Retrieves all media associated with a specific field
+      parameters:
+      - description: field ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.MediaResponse'
+            type: array
+        "404":
+          description: Field not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to fetch Media for Field !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get media by field
+      tags:
+      - Field
+  /media:
+    get:
+      description: Retrieve all media
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.MediaResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get all media
+      tags:
+      - Media
+    post:
+      consumes:
+      - application/json
+      description: Creates a new Media entry in the database
+      parameters:
+      - description: Media creation payload
+        in: body
+        name: media
+        required: true
+        schema:
+          $ref: '#/definitions/model.MediaRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MediaResponse'
+        "400":
+          description: Invalid Media POST request payload !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to create Media !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new Media
+      tags:
+      - Media
+  /media/{id}:
+    delete:
+      description: Deletes a media from the database by its ID
+      parameters:
+      - description: Media ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Media deleted successfully
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Media not found !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to delete Media !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete a media
+      tags:
+      - Media
+    get:
+      description: Retrieves a specific media from the database by its ID
+      parameters:
+      - description: media ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MediaResponse'
+        "404":
+          description: Media not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to find specific Media !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get media by ID
+      tags:
+      - Media
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing media
+      parameters:
+      - description: Media ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated media payload
+        in: body
+        name: media
+        required: true
+        schema:
+          $ref: '#/definitions/model.MediaUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MediaResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update a media
+      tags:
+      - Media
+  /media/{id}/fields:
+    get:
+      description: Retrieves fields associated with a specific media
+      parameters:
+      - description: media ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.FieldResponse'
+            type: array
+        "404":
+          description: Media not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to fetch Fields for Media !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get fields by Media ID
+      tags:
+      - Media
+  /media/{id}/tags:
+    get:
+      description: Retrieves tags associated with a specific media
+      parameters:
+      - description: media ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.TagResponse'
+            type: array
+        "404":
+          description: Media not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to fetch Tags for Media !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get tags by Media ID
+      tags:
+      - Media
+  /mediaFields:
+    get:
+      description: Retrieve all mediaField
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.MediaFieldResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get all mediaField
+      tags:
+      - MediaField
+    post:
+      consumes:
+      - application/json
+      description: Creates a new MediaField entry in the database
+      parameters:
+      - description: MediaField creation payload
+        in: body
+        name: mediaField
+        required: true
+        schema:
+          $ref: '#/definitions/model.MediaFieldRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MediaFieldResponse'
+        "400":
+          description: Invalid MediaField POST request payload !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to create MediaField !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new MediaField
+      tags:
+      - MediaField
+  /mediaFields/{fieldID}/{mediaID}:
+    delete:
+      description: Deletes a mediaField from the database by its ID
+      parameters:
+      - description: Field ID
+        in: path
+        name: fieldID
+        required: true
+        type: string
+      - description: Media ID
+        in: path
+        name: mediaID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: MediaField deleted successfully
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: MediaField not found !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to delete MediaField !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete a mediaField
+      tags:
+      - MediaField
+    get:
+      description: Retrieves a specific mediaField from the database by its ID
+      parameters:
+      - description: Field ID
+        in: path
+        name: fieldID
+        required: true
+        type: string
+      - description: Media ID
+        in: path
+        name: mediaID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MediaFieldResponse'
+        "404":
+          description: MediaField not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to find specific MediaField !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get mediaField by ID
+      tags:
+      - MediaField
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing mediaField
+      parameters:
+      - description: Field ID
+        in: path
+        name: fieldID
+        required: true
+        type: string
+      - description: Media ID
+        in: path
+        name: mediaID
+        required: true
+        type: string
+      - description: Updated mediaField payload
+        in: body
+        name: mediaField
+        required: true
+        schema:
+          $ref: '#/definitions/model.MediaFieldUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MediaFieldResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update a mediaField
+      tags:
+      - MediaField
+  /tags:
+    get:
+      description: Retrieve all tags
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.TagResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get all tags
+      tags:
+      - Tag
+    post:
+      consumes:
+      - application/json
+      description: Creates a new Tag entry in the database
+      parameters:
+      - description: Tag creation payload
+        in: body
+        name: tag
+        required: true
+        schema:
+          $ref: '#/definitions/model.TagRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TagResponse'
+        "400":
+          description: Invalid Tag POST request payload !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to create Tag !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new Tag
+      tags:
+      - Tag
+  /tags/{id}:
+    delete:
+      description: Deletes a tag from the database by its ID
+      parameters:
+      - description: Tag ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Tag deleted successfully
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Tag not found !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to delete Tag !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete a tag
+      tags:
+      - Tag
+    get:
+      description: Retrieves a specific tag from the database by its ID
+      parameters:
+      - description: tag ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TagResponse'
+        "404":
+          description: Tag not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to find specific Tag !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get tag by ID
+      tags:
+      - Tag
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing tag
+      parameters:
+      - description: Tag ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated tag payload
+        in: body
+        name: tag
+        required: true
+        schema:
+          $ref: '#/definitions/model.TagUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.TagResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update a tag
+      tags:
+      - Tag
+  /tags/{id}/media:
+    get:
+      description: Retrieves all media associated with a specific tag
+      parameters:
+      - description: tag ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.MediaResponse'
+            type: array
+        "404":
+          description: Tag not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to fetch Media for Tag !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get media by tag
+      tags:
+      - Tag
+  /users:
+    get:
+      description: Retrieve all user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.UserResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get all user
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: Creates a new User entry in the database
+      parameters:
+      - description: User creation payload
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserResponse'
+        "400":
+          description: Invalid User POST request payload !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to create User !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new User
+      tags:
+      - User
+  /users/{id}:
+    delete:
+      description: Deletes a user from the database by its ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User deleted successfully
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: User not found !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to delete User !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Delete a user
+      tags:
+      - User
+    get:
+      description: Retrieves a specific User from the database by its ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserResponse'
+        "404":
+          description: User not found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Failed to find specific User !
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Get User by ID
+      tags:
+      - User
+    patch:
+      consumes:
+      - application/json
+      description: Update an existing user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated user payload
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.UserUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Update a user
+      tags:
+      - User
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
