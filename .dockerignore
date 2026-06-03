@@ -1,0 +1,26 @@
+# Binaries
+mediade*
+
+# IDE and editor files
+.vscode/
+*.swp
+*.tmp
+
+# Git
+.git
+.gitignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Go build cache and artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+.bundle
+
+# Dependency directories
+vendor/
