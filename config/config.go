@@ -31,19 +31,20 @@ type Config struct {
 }
 
 func initEnv(fileName string) (Constants, error) {
-	// Load .env file
-	if err := godotenv.Load(fileName); err != nil {
-		return Constants{}, fmt.Errorf("error loading env file %q: %w", fileName, err)
+	if _, err := os.Stat(fileName); err == nil {
+		if err := godotenv.Load(fileName); err != nil {
+			log.Println("warning: failed to load .env:", err)
+		}
+	} else if !os.IsNotExist(err) {
+		log.Println("warning: error checking .env:", err)
 	}
 
 	var constants Constants
 
-	// Load constants from file
 	constants.Port = os.Getenv("PORT")
 	constants.JWTSecret = os.Getenv("JWT_SECRET_KEY")
 	constants.ConnectionString = os.Getenv("CONNECTION_STRING")
 
-	// Simple checks
 	if constants.Port == "" {
 		return Constants{}, fmt.Errorf("missing required env var PORT")
 	}
