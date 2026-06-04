@@ -9,7 +9,7 @@
 
 [Cassian Joly](https://github.com/Cassian-J)
 
-**Groupe / promo :** JAC B3 Dev Ynov
+**Groupe / promo :** JAC / B3 Dev Ynov
 
 
 **Dépôt :** https://github.com/jgaudin826/devops-fil-rouge-JAC.git
@@ -32,6 +32,7 @@ Elle est destinée aux personnes qui consomment différents types de médias (s�
 | Backend / API | Go, gorm, chi | Bonne maîtrise de ces technologies |
 | Base de données | PostgreSQL | Pour le challenge, découvrir de nouvelles choses. C'est une technologie ancienne, donc bien documentée et robuste. |
 | Orchestration cible | Compose puis K8s | Simplicité d'éxecution, versioning. |
+| Image Dockerfile | golang:1.26.4-alpine | Stable, version présice, légère |
 
 ---
 
@@ -71,8 +72,12 @@ Elle est destinée aux personnes qui consomment différents types de médias (s�
 ## Démarrage local
 
 ```bash
+# Cloner le dépôt
 git clone https://github.com/jgaudin826/devops-fil-rouge-JAC.git
 cd devops-fil-rouge-JAC
+
+cp .env.example .env
+# Renseigner PORT, JWT_SECRET_KEY, POSTGRES_USER, etc.
 go mod tidy
 go get
 go run main.go
