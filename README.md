@@ -1,12 +1,17 @@
 # Mediadex-API
 
 **Équipe :**
+
+
 [Jérémy Gaudin](https://github.com/jgaudin826), 
 
 [Aurélien Dugast](https://github.com/LaNuggets), 
 
 [Cassian Joly](https://github.com/Cassian-J)
+
 **Groupe / promo :** JAC B3 Dev Ynov
+
+
 **Dépôt :** https://github.com/jgaudin826/devops-fil-rouge-JAC.git
 
 ---
