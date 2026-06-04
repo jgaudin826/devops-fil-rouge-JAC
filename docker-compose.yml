@@ -15,6 +15,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    restart: unless-stopped
 
   mediadex:
     container_name: mediadex-api
@@ -30,6 +31,7 @@ services:
       PORT: ${PORT}
       JWT_SECRET_KEY: ${JWT_SECRET_KEY}
       CONNECTION_STRING: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    restart: unless-stopped
 
 volumes:
   postgres_data:
