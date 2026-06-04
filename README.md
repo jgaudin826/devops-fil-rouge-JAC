@@ -1,6 +1,11 @@
 # Mediadex-API
 
-**Équipe :** [Jérémy Gaudin](https://github.com/jgaudin826), [Aurélien Dugast](https://github.com/LaNuggets), [Cassian Joly](https://github.com/Cassian-J)
+**Équipe :**
+[Jérémy Gaudin](https://github.com/jgaudin826), 
+
+[Aurélien Dugast](https://github.com/LaNuggets), 
+
+[Cassian Joly](https://github.com/Cassian-J)
 **Groupe / promo :** JAC B3 Dev Ynov
 **Dépôt :** https://github.com/jgaudin826/devops-fil-rouge-JAC.git
 
@@ -21,7 +26,7 @@ Elle est destinée aux personnes qui consomment différents types de médias (s�
 | --------- | ----- | -------------------------- |
 | Backend / API | Go, gorm, chi | Bonne maîtrise de ces technologies |
 | Base de données | PostgreSQL | Pour le challenge, découvrir de nouvelles choses. C'est une technologie ancienne, donc bien documentée et robuste. |
-| Orchestration cible | Compose puis K8s |  |
+| Orchestration cible | Compose puis K8s | Simplicité d'éxecution, versioning. |
 
 ---
 
@@ -31,7 +36,7 @@ Elle est destinée aux personnes qui consomment différents types de médias (s�
 | ------ | ---- | ------------------------- |
 | Cassian Joly | Lead Dev | Création du Dockerfile service |
 | Jérémy Gaudin | Lead Ops | Docker compose, K8s, doc de déploiement |
-|  | Lead Qualité / CI | Pipelines, test, revue de sécurité |
+| Aurélien Dugast | Lead Qualité / CI | Pipelines, test, revue de sécurité |
 | Aurélien Dugast | Lead Doc / Produit | Documentation, note-archi et analyse post-mortem |
 
 ---
@@ -50,17 +55,27 @@ Elle est destinée aux personnes qui consomment différents types de médias (s�
 | ------ | -------- | ----------------- |
 | S1 | README cadrage | X |
 | S2 | Dockerfile(s) + DB en container | X |
-| S3 | docker-compose + CI vert | ☐ |
-| S4 | Manifests K8s appliqués | ☐ |
+| S3 | docker-compose | X |
+| S4 | Pipelines CI | ☐ |
+| S5 | Manifests K8s appliqués | ☐ |
 | S5 | Monitoring + post-mortem | ☐ |
 | S6 | Soutenance prête | ☐ |
 
 ---
 
-## Démarrage local (à compléter au fil des séances)
+## Démarrage local
 
 ```bash
 git clone https://github.com/jgaudin826/devops-fil-rouge-JAC.git
+cd devops-fil-rouge-JAC
+go mod tidy
+go get
+go run main.go
+```
+
+## Démarrage avec Docker compose
+```
+docker compose up -d
 ```
 
 ---
