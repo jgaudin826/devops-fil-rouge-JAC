@@ -1,7 +1,6 @@
 # Mediadex-API
 
 **Équipe :**
-bonjour
 
 [Jérémy Gaudin](https://github.com/jgaudin826), 
 
@@ -76,13 +75,21 @@ cd devops-fil-rouge-JAC
 
 cp .env.example .env
 # Renseigner PORT, JWT_SECRET_KEY, POSTGRES_USER, etc.
+
 go mod tidy
 go get
 go run main.go
 ```
 
-## Démarrage avec Docker compose
-```
+## Démarrage avec Docker compose
+```bash
+# Cloner le dépôt
+git clone https://github.com/jgaudin826/devops-fil-rouge-JAC.git
+cd devops-fil-rouge-JAC
+
+cp .env.example .env
+# Renseigner PORT, JWT_SECRET_KEY, POSTGRES_USER, etc.
+
 docker compose up -d
 ```
 
