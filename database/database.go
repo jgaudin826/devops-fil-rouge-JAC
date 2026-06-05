@@ -18,7 +18,7 @@ func Migrate(database *gorm.DB) error {
 	)
 
 	if err != nil {
-		return fmt.Errorf("Failed to migrate database: %w", err)
+		return fmt.Errorf("failed to migrate database: %w", err)
 	}
 
 	return nil

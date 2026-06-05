@@ -5,6 +5,10 @@ import (
 	"net/http"
 )
 
+type contextKey string
+
+const contextKeyID contextKey = "id"
+
 func AuthMiddleware(secret string) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -22,7 +26,7 @@ func AuthMiddleware(secret string) func(http.Handler) http.Handler {
 				return
 			}
 
-			ctx := context.WithValue(r.Context(), "id", id)
+			ctx := context.WithValue(r.Context(), contextKeyID, id)
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}
