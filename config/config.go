@@ -70,7 +70,7 @@ func New() (*Config, error) {
 	}
 
 	// Open PostgreSQL Database Connection
-	databaseSession, err := gorm.Open(postgres.Open(config.Constants.ConnectionString), &gorm.Config{})
+	databaseSession, err := gorm.Open(postgres.Open(config.ConnectionString), &gorm.Config{})
 	if err != nil {
 		return &config, err
 	}
