@@ -62,10 +62,8 @@ Elle est destinée aux personnes qui consomment différents types de médias (s�
 | S1 | README cadrage | X |
 | S2 | Dockerfile(s) + DB en container | X |
 | S3 | docker-compose | X |
-| S4 | Pipelines CI | ☐ |
-| S5 | Manifests K8s appliqués | ☐ |
-| S5 | Monitoring + post-mortem | ☐ |
-| S6 | Soutenance prête | ☐ |
+| S5 | Pipelines CI | X |
+| S6 | Soutenance prête | X |
 
 ---
 
