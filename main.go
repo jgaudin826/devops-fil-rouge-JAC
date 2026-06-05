@@ -68,7 +68,7 @@ func main() {
 	router := Routes(configuration)
 
 	// Serve the API
-	log.Println("Server running on http://localhost:" + configuration.Constants.Port)
-	log.Println("Swagger UI available at http://localhost:" + configuration.Constants.Port + "/swagger/index.html")
-	log.Fatal(http.ListenAndServe(":"+configuration.Constants.Port, router))
+	log.Println("Server running on http://localhost:" + configuration.Port)
+	log.Println("Swagger UI available at http://localhost:" + configuration.Port + "/swagger/index.html")
+	log.Fatal(http.ListenAndServe(":"+configuration.Port, router))
 }
